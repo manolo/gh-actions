@@ -1,0 +1,14 @@
+name: 12 Service
+on: push
+jobs:
+  service-job:
+    runs-on: ubuntu-latest
+    services:
+      echo:
+        image: hashicorp/http-echo 
+        ports:
+          - 5678:5678
+        # options: -listen=:8080 -text="hello world" 
+    steps:
+      - run: |
+          curl http://localhost:5678
