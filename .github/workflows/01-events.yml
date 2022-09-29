@@ -1,0 +1,31 @@
+name: 01 Events
+on:
+  push: # When a commit happens the in main branch
+    branches: ["main"]
+  workflow_dispatch: # For manualling running the workflow in GH UI
+    inputs:
+      minor:
+        description: 'Minor version'
+        required: true
+        default: '23.2'
+        type: choice
+        options:
+        - '23.2'
+        - '23.1'
+        - '14.8'
+        - '24.0'
+  pull_request:        # When a PR is opened (executes .yml from the PR branch)
+    types: [opened, reopened]
+    paths-ignore: 
+      - '**/*.md'
+      - '**/*.txt'
+  pull_request_target: # When a PR event happens (executes .yml from the PR-target branch)
+  schedule: # Run periodically
+    - cron: "5 * * * *"  # M-H-d-m-w each sunday syntax like unix crontab
+jobs:
+  job:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "EVENT NAME: ${{github.event_name}}"
+          echo "INPUT VERSION VALUE: ${{github.event.inputs.minor}}"

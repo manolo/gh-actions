@@ -1,0 +1,16 @@
+name: 11 Issue Comment
+on:
+  issue_comment:
+    types: [created]
+  issues:
+    types: [opened]
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create comment
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            Thanks for your comment ${{ github.event.comment.user.login }}, we have norified to @manolo to answer you

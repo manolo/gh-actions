@@ -1,0 +1,29 @@
+name: 07 Matrix Random Fail
+on: push
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.step1.outputs.matrix }}
+    steps:
+      - id: step1
+        run: |
+          JSON='{"include":[{"current":"M1"},{"current":"M2"},{"current":"M3"},{"current":"M4"}]}'
+          echo "::set-output name=matrix::$JSON"
+  job2:
+    needs: job1
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: ${{fromJson(needs.job1.outputs.matrix)}}
+    steps:
+      - run: |
+          test `expr $RANDOM % 10` -gt 4
+      - if: ${{ always() }}
+        run: echo "${{matrix.current}} ${{job.status}}"
+  job3:
+    if: ${{ always() }}
+    needs: job2
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "JOB 3 always executed"

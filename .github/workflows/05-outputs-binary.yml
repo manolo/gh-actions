@@ -1,0 +1,17 @@
+name: 05 Outputs Binary
+on: push
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    outputs:
+      var1: ${{ steps.step1.outputs.test }}
+    steps:
+      - id: step1
+        run: |
+          echo "::set-output name=test::$(tar czf - . | openssl base64 | tr '\n' '|')"  
+  job2:
+    runs-on: ubuntu-latest
+    needs: job1
+    steps:
+      - run: |
+          echo "${{needs.job1.outputs.var1}}" | tr '|' '\n' | openssl base64 -d | tar tvzf -

@@ -1,0 +1,17 @@
+name: 08 Container
+on: push
+jobs:
+  runner-job:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          node --version
+          uname -a
+  container-job:
+    runs-on: ubuntu-latest
+    container:
+      image: node:14
+    steps:
+      - run: |
+          node --version
+          uname -a

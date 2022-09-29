@@ -1,0 +1,13 @@
+name: 06 Matrix
+on: push
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      max-parallel: 2
+      matrix:
+        var1: ["FOO", "BAR", "BAZ"] 
+    steps:
+      - run: |
+          echo "${{ matrix.var1 }}"
