@@ -2,6 +2,7 @@ name: 01 Events
 on:
   push: # When a commit happens the in main branch
     branches: ["main"]
+    paths: [".github/workflows/01-*"]
   workflow_dispatch: # For manualling running the workflow in GH UI
     inputs:
       minor:
@@ -16,12 +17,12 @@ on:
         - '24.0'
   pull_request:        # When a PR is opened (executes .yml from the PR branch)
     types: [opened, reopened]
-    paths-ignore: 
+    paths-ignore:
       - '**/*.md'
       - '**/*.txt'
   pull_request_target: # When a PR event happens (executes .yml from the PR-target branch)
   schedule: # Run periodically
-    - cron: "5 * * * *"  # M-H-d-m-w each sunday syntax like unix crontab
+    - cron: "0 23 * * 6"  # M-H-d-m-w each sunday syntax like unix crontab
 jobs:
   job:
     runs-on: ubuntu-latest

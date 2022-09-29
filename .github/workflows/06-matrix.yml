@@ -1,5 +1,7 @@
 name: 06 Matrix
-on: push
+on:
+  push:
+    paths: [".github/workflows/06-*"]
 jobs:
   job1:
     runs-on: ubuntu-latest
@@ -7,7 +9,7 @@ jobs:
       fail-fast: true
       max-parallel: 2
       matrix:
-        var1: ["FOO", "BAR", "BAZ"] 
+        var1: ["FOO", "BAR", "BAZ"]
     steps:
       - run: |
           echo "${{ matrix.var1 }}"

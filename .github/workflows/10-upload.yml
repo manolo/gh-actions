@@ -1,15 +1,17 @@
 name: 10 Upload Artifact
-on: push
+on:
+  push:
+    paths: [".github/workflows/10-*"]
 jobs:
   job1:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - run: |
-          tar czf my-artifact.tgz .github *
+          tar czf my-artifact.tgz .github/*
       - uses: actions/upload-artifact@v2.2.0
         with:
           name: my-uploaded-artifact.tgz
           path: my-**/**
           if-no-files-found: error
-          retention-days: 90          
+          retention-days: 90

@@ -1,5 +1,7 @@
 name: 03 Parallel
-on: push
+on:
+  push:
+    paths: [".github/workflows/03-*"]
 jobs:
   job1:
     runs-on: ubuntu-latest
