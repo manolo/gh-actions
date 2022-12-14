@@ -55,10 +55,10 @@ jobs:
       - name: Compute Stats
         run:  |
           echo "STATS HERE" >> $GITHUB_STEP_SUMMARY
-      - name: Check Failure Status
+      - name: Set Failure Status
+        if: ${{ needs.unit-tests.result != 'success' || needs.unit-tests.result != 'success' }}
         run: |
-          [ ${{needs.unit-tests.result}} = failure -o ${{needs.it-tests.result}} = failure ] \
-            && echo "🚫 THERE ARE TEST MODULES WITH FAILURES" | tee -a $GITHUB_STEP_SUMMARY \
-            && exit 1 || exit 0
+            echo "🚫 THERE ARE TEST MODULES WITH FAILURES" | tee -a $GITHUB_STEP_SUMMARY
+            exit 1
 
       
