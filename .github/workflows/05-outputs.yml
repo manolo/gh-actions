@@ -11,12 +11,13 @@ jobs:
       var3: ${{ steps.step3.outputs.var }}
     steps:
       - id: step1
-        run: echo "::set-output name=var::HELLO"
+        run: echo "var=HELLO" >> $GITHUB_OUTPUT
       - id: step2
-        run: echo "::set-output name=var::WORLD"
+        run: echo "var=WORLD" >> $GITHUB_OUTPUT
       - id: step3
-        run: |
-          echo "::set-output name=var::$(tar czf - . | openssl base64 | tr '\n' '|')"
+        run: echo "var=$(tar czf - . | openssl base64 | tr '\n' '|')" >> $GITHUB_OUTPUT
+      - run: echo "EEEEEEEEEE=AAAAAAAAA" > $GITHUB_ENV
+      - run: echo "${{env.EEEEEEEEEE}}; set
   job2:
     runs-on: ubuntu-latest
     needs: job1
