@@ -1,22 +1,20 @@
 name: 16 Concurrency
 on:
-  push: # When a commit happens the in main branch
+  push:
     paths: [".github/workflows/16-*"]
-  workflow_dispatch: # For manualling running the workflow in GH UI
-  pull_request:        # When a PR is opened (executes .yml from the PR branch)
-    paths-ignore:
-      - '**/*.md'
-      - '**/*.txt'
-  pull_request_target: # When a PR event happens (executes .yml from the PR-target branch)
-concurrency: # Cancel if there are higher priority waiting request for the branchs
-  group: ${{ github.head_ref || github.ref }}
+  workflow_dispatch: 
+  pull_request:      
+    paths: [".github/workflows/16-*"]
+concurrency:
+  group: ${{ github.ref_name || github.ref }}
   cancel-in-progress: true
 jobs:
   job:
     runs-on: ubuntu-latest
     steps:
+      - run: echo "${{github.event_name}}, ${{github.head_ref}}, ${{github.ref_name}}, ${{github.base_ref}}, ${{github.ref}}, ${{github.sha}}"
+      - run: echo "${{toJSON(github)}}" 
       - run: |
-          echo sleeping "${{github.head_ref}} || ${{github.base_ref}} || ${{github.ref}} ${{github.sha}}"
           echo "LOOP"
           a=1; while [ $a -lt 180 ]; do echo $a; a=`expr $a + 1`; sleep 1; done
           echo "DONE"
