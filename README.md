@@ -1,5 +1,7 @@
 # gh-actions
 
+adasf
+
 Just a repo for testing GH actions using personal account in GH, or using `act` in my local.
 
 `.github/workflows` contain all the examples
