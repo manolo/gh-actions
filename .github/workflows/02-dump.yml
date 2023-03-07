@@ -9,6 +9,6 @@ jobs:
       - run: echo "${{ toJSON(github) }}"
       - run: echo "${{ toJSON(runner) }}"
       - run: echo "${{ toJSON(job) }}"
-      - run: set && id -a && pwd && uname -a
+      - run: pwd && uname -a && id -a && set
 
 # other objects: strategy, matrix
