@@ -5,7 +5,7 @@ on:
   workflow_dispatch: 
   pull_request:      
     paths: [".github/workflows/16-*"]
-concurrency: ##
+concurrency: #....
   group: ${{ github.ref_name || github.ref }}
   cancel-in-progress: true
 jobs:
