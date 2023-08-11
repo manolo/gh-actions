@@ -10,5 +10,6 @@ jobs:
       - run: echo "${{ toJSON(runner) }}"
       - run: echo "${{ toJSON(job) }}"
       - run: pwd && uname -a && id -a && set
+      - run: echo "${{ toJSON(strategy) }}"
 
 # other objects: strategy, matrix
